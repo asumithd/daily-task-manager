@@ -1,0 +1,86 @@
+<h2>Add Task</h2>
+<form (ngSubmit)="addTask()">
+  <mat-form-field>
+    <input
+      matInput
+      placeholder="Title"
+      [(ngModel)]="task.title"
+      name="title"
+      required
+    />
+  </mat-form-field>
+  <mat-form-field>
+    <input
+      matInput
+      placeholder="Description"
+      [(ngModel)]="task.description"
+      name="description"
+    />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select
+      [(ngModel)]="task.priority"
+      name="priority"
+      placeholder="Priority"
+    >
+      <mat-option value="Low">Low</mat-option>
+      <mat-option value="Medium">Medium</mat-option>
+      <mat-option value="High">High</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <input
+      matInput
+      [matDatepicker]="dueDatePicker"
+      placeholder="Due Date"
+      [(ngModel)]="task.dueDate"
+      name="dueDate"
+    />
+    <mat-datepicker-toggle
+      matSuffix
+      [for]="dueDatePicker"
+    ></mat-datepicker-toggle>
+    <mat-datepicker #dueDatePicker></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field>
+    <input
+      matInput
+      [matDatepicker]="reminderPicker"
+      placeholder="Reminder"
+      [(ngModel)]="task.reminder"
+      name="reminder"
+    />
+    <mat-datepicker-toggle
+      matSuffix
+      [for]="reminderPicker"
+    ></mat-datepicker-toggle>
+    <mat-datepicker #reminderPicker></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field>
+    <input
+      matInput
+      placeholder="Category"
+      [(ngModel)]="task.category"
+      name="category"
+    />
+  </mat-form-field>
+  <button mat-raised-button color="primary" type="submit">Add Task</button>
+</form>
+<br />
+<hr />
+<h2>Daily Tasks</h2>
+
+<mat-list>
+  <mat-list-item *ngFor="let task of tasks">
+    <mat-checkbox
+      [checked]="task.completed"
+      (change)="toggleTaskCompletion(task)"
+    >
+      {{ task.title }} - {{ task.priority }} - Due:
+      {{ task.dueDate | date : "shortDate" }}
+    </mat-checkbox>
+    <button mat-button color="warn" (click)="deleteTask(task?._id)">
+      Delete
+    </button>
+  </mat-list-item>
+</mat-list>
